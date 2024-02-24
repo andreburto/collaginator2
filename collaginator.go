@@ -7,7 +7,7 @@ import (
 	"image"
 	"image/draw"
 	"image/png"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 )
@@ -27,7 +27,7 @@ type Yvonne struct {
 
 func checkErr(e error, msg string) {
 	if e != nil {
-		fmt.Println(fmt.Sprintf("ERROR: %s", msg))
+		fmt.Printf("ERROR: %s\n", msg)
 		os.Exit(1)
 	}
 }
@@ -53,7 +53,7 @@ func fetchImageFromLink(url string) http.Response {
 	resp1, err := http.Get(url)
 	checkErr(err, fmt.Sprintf("Could not acquire content from url: %s", url))
 
-	jsonBody, _ := ioutil.ReadAll(resp1.Body)
+	jsonBody, _ := io.ReadAll(resp1.Body)
 	resp1.Body.Close()
 
 	yvonneStruct := Yvonne{}
